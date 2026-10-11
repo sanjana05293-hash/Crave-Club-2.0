@@ -18,6 +18,37 @@
 <script src="app.js" defer></script>
 </head>
 <body>
+  
+  <div id="loginScreen" class="login-screen hidden">
+    <form id="loginForm" class="login-card">
+      <h1>CRAVE CLUB ♡</h1>
+      <p>Manager login</p>
+
+      <label for="managerEmail">Email</label>
+      <input
+        id="managerEmail"
+        type="email"
+        autocomplete="username"
+        placeholder="Manager email"
+        required
+      >
+
+      <label for="managerPassword">Password</label>
+      <input
+        id="managerPassword"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Your password"
+        required
+      >
+
+      <button type="submit" id="loginButton">
+        Sign in
+      </button>
+
+      <p id="loginError" role="alert"></p>
+    </form>
+  </div>
   <div id="splash" class="splash" aria-label="CRAVE CLUB loading">
     <div class="splash-confetti confetti-one">✦</div><div class="splash-confetti confetti-two">♡</div>
     <div class="splash-mark" aria-hidden="true">
