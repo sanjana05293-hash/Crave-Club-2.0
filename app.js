@@ -380,29 +380,129 @@
     const table={id:uid('table'),name:`Table ${number}`,createdAt:new Date().toISOString()};state.tables.push(table);
     if(saveData()){renderTables();toast(`${table.name} added.`);}else state.tables.pop();
   }
-  function init() {
+  
+  let appInitialized = false;
+
+  function initApp() {
+    if (appInitialized) return;
+    appInitialized = true;
+
     loadData();
-    // Show splash for exactly two seconds before revealing the app.
-    setTimeout(()=>{$('#splash').classList.add('leaving');$('#app').classList.remove('hidden');setTimeout(()=>$('#splash')?.remove(),550);},2000);
-    $$('[data-home]').forEach(button=>button.addEventListener('click',()=>openPage('home')));
-    $$('[data-page]').forEach(button=>button.addEventListener('click',()=>openPage(button.dataset.page)));
-    $('#homeButton').addEventListener('click',()=>openPage('home'));
-    $('#addMenuButton').addEventListener('click',()=>openMenuDialog());
-    $('#addStockButton').addEventListener('click',()=>openStockDialog());
-    $('#addContactButton').addEventListener('click',()=>openContactDialog());
-    $('#addTableButton').addEventListener('click',addTable);
-    $('#saveOrderButton').addEventListener('click',saveOrder);
-    $('#cancelDraftButton').addEventListener('click',()=>{state.cart={};state.selectedTableId=null;renderTables();renderCart();toast('Draft order cleared.');});
-    $('#stockSearch').addEventListener('input',renderStock);$('#stockFilter').addEventListener('change',renderStock);
-    $('#recordForm').addEventListener('submit',handleRecordSubmit);
-    $('#closeDialogButton').addEventListener('click',closeRecordDialog);$('#dialogCancelButton').addEventListener('click',closeRecordDialog);
-    $('#confirmNo').addEventListener('click',()=>$('#confirmDialog').close());
-    $('#confirmYes').addEventListener('click',()=>{const callback=state.pendingConfirm;state.pendingConfirm=null;$('#confirmDialog').close();if(callback)callback();});
-    $('#closeDetailsButton').addEventListener('click',()=>$('#detailsDialog').close());
-    $('#recordDialog').addEventListener('click',event=>{if(event.target===$('#recordDialog'))closeRecordDialog();});
-    // In the empty order-menu state, this hidden action routes to Menu List without adding a fifth home option.
-    const hiddenMenuButton=document.createElement('button');hiddenMenuButton.id='goToMenuHidden';hiddenMenuButton.hidden=true;hiddenMenuButton.addEventListener('click',()=>openPage('menu'));document.body.append(hiddenMenuButton);
-    renderMenu();renderTables();renderOrderMenu();renderCart();renderHistory();renderStock();renderContacts();
+
+    $$('[data-home]').forEach(button =>
+      button.addEventListener('click', () => openPage('home'))
+    );
+    $$('[data-page]').forEach(button =>
+      button.addEventListener('click', () => openPage(button.dataset.page))
+    );
+
+    $('#homeButton').addEventListener('click', () => openPage('home'));
+    $('#addMenuButton').addEventListener('click', () => openMenuDialog());
+    $('#addStockButton').addEventListener('click', () => openStockDialog());
+    $('#addContactButton').addEventListener('click', () => openContactDialog());
+    $('#addTableButton').addEventListener('click', addTable);
+    $('#saveOrderButton').addEventListener('click', saveOrder);
+
+    $('#cancelDraftButton').addEventListener('click', () => {
+      state.cart = {};
+      state.selectedTableId = null;
+      renderTables();
+      renderCart();
+      toast('Draft order cleared.');
+    });
+
+    $('#stockSearch').addEventListener('input', renderStock);
+    $('#stockFilter').addEventListener('change', renderStock);
+    $('#recordForm').addEventListener('submit', handleRecordSubmit);
+    $('#closeDialogButton').addEventListener('click', closeRecordDialog);
+    $('#dialogCancelButton').addEventListener('click', closeRecordDialog);
+
+    $('#confirmNo').addEventListener('click', () => $('#confirmDialog').close());
+
+    $('#confirmYes').addEventListener('click', () => {
+      const callback = state.pendingConfirm;
+      state.pendingConfirm = null;
+      $('#confirmDialog').close();
+      if (callback) callback();
+    });
+
+    $('#closeDetailsButton').addEventListener('click', () =>
+      $('#detailsDialog').close()
+    );
+
+    $('#recordDialog').addEventListener('click', event => {
+      if (event.target === $('#recordDialog')) closeRecordDialog();
+    });
+
+    const hiddenMenuButton = document.createElement('button');
+    hiddenMenuButton.id = 'goToMenuHidden';
+    hiddenMenuButton.hidden = true;
+    hiddenMenuButton.addEventListener('click', () => openPage('menu'));
+    document.body.append(hiddenMenuButton);
+
+    renderMenu();
+    renderTables();
+    renderOrderMenu();
+    renderCart();
+    renderHistory();
+    renderStock();
+    renderContacts();
   }
-  document.addEventListener('DOMContentLoaded',init);
+
+  function showLogin(message = '') {
+    $('#app').classList.add('hidden');
+    $('#loginScreen').classList.remove('hidden');
+    $('#loginError').textContent = message;
+    $('#splash')?.remove();
+  }
+
+  function showManagerApp() {
+    $('#loginScreen').classList.add('hidden');
+    $('#app').classList.remove('hidden');
+    $('#splash')?.remove();
+    initApp();
+  }
+
+  function setupLogin() {
+    $('#loginForm').addEventListener('submit', async event => {
+      event.preventDefault();
+
+      const email = $('#managerEmail').value.trim();
+      const password = $('#managerPassword').value;
+      const button = $('#loginButton');
+
+      button.disabled = true;
+      button.textContent = 'Signing in…';
+      $('#loginError').textContent = '';
+
+      try {
+        const result = await auth.signInWithEmailAndPassword(email, password);
+
+        if (!isApprovedManager(result.user)) {
+          await auth.signOut();
+          showLogin('This account is not approved for manager access.');
+        }
+      } catch (error) {
+        showLogin(
+          error.code === 'auth/invalid-credential'
+            ? 'Email or password is incorrect.'
+            : 'Sign-in failed. Check your connection and try again.'
+        );
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Sign in';
+      }
+    });
+
+    auth.onAuthStateChanged(user => {
+      if (user && isApprovedManager(user)) {
+        showManagerApp();
+      } else {
+        showLogin();
+        if (user) auth.signOut();
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupLogin);
 })();
