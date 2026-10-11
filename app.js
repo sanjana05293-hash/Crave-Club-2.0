@@ -1,5 +1,36 @@
+
 (() => {
   'use strict';
+
+  // Firebase connection
+  const firebaseConfig = {
+    apiKey: "AIzaSyDE1a3bekyRJyhmDSpOh5YwHWti_kb9ewQ",
+    authDomain: "crave-club-2.firebaseapp.com",
+    projectId: "crave-club-2",
+    storageBucket: "crave-club-2.firebasestorage.app",
+    messagingSenderId: "462781490855",
+    appId: "1:462781490855:web:6f8fd00664ff1b32615d82",
+    measurementId: "G-L922DFZB79"
+  };
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  const APPROVED_MANAGER_UIDS = new Set([
+    "Mm3doLvdYvhMe60M1TbphqXIhnm1",
+    "7la4mBuaBEaHAMMQ8OF9qPLL9tM2"
+  ]);
+
+  function isApprovedManager(user) {
+    return Boolean(
+      user && APPROVED_MANAGER_UIDS.has(user.uid)
+    );
+  }
+
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const STORAGE_KEY = 'craveClub.v1';
