@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#641f32">
+  <meta name="description" content="CRAVE CLUB — a playful little café management app.">
+  <title>CRAVE CLUB · Café Playground</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div id="splash" class="splash" aria-label="CRAVE CLUB loading">
+    <div class="splash-confetti confetti-one">✦</div><div class="splash-confetti confetti-two">♡</div>
+    <div class="splash-mark" aria-hidden="true">
+      <svg viewBox="0 0 120 120" role="img">
+        <path d="M57 14a43 43 0 1 0 36 67" fill="none" stroke="#641f32" stroke-width="18" stroke-linecap="round"/>
+        <path d="M63 14a43 43 0 0 1 29 67" fill="none" stroke="#f3d982" stroke-width="18" stroke-linecap="round"/>
+        <path d="M43 39a28 28 0 0 1 34 2M41 60a28 28 0 0 0 38 17" fill="none" stroke="#fff7e9" stroke-width="7" stroke-linecap="round"/>
+        <path d="M92 15l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#f3d982"/>
+      </svg>
+    </div>
+    <div class="splash-wordmark">CRAVE <span>CLUB</span></div>
+    <p>good food, happy mood ♡</p>
+    <div class="loading-dots"><i></i><i></i><i></i></div>
+  </div>
+
+  <div id="app" class="app-shell hidden">
+    <header class="topbar">
+      <button class="brand-button" data-home aria-label="Go home">
+        <span class="mini-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><path d="M23 6a18 18 0 1 0 15 28" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M25 6a18 18 0 0 1 12 28" fill="none" stroke="#f3d982" stroke-width="7" stroke-linecap="round"/><path d="M37 4l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#f3d982"/></svg>
+        </span>
+        <span class="brand-copy"><strong>CRAVE CLUB</strong><small>your little café playground</small></span>
+      </button>
+      <div class="topbar-right"><span class="open-pill"><i></i> Café mode: ON</span><button class="icon-button" id="homeButton" aria-label="Return home" title="Home">⌂</button></div>
+    </header>
+
+    <main id="mainContent" class="main-content">
+      <section id="homePage" class="page active" aria-labelledby="welcomeTitle">
+        <div class="welcome-row">
+          <div><span class="eyebrow">HEY, CAFÉ BOSS <span class="sparkle">✦</span></span><h1 id="welcomeTitle">Let's make<br><em>something delicious.</em></h1><p class="welcome-sub">Your café, your rules. Pick a station and let's get cooking.</p></div>
+          <div class="hero-sticker" aria-hidden="true"><span class="sticker-spark">✦</span><div class="burger-illustration"><div class="bun-top"><i></i><i></i><i></i><i></i><i></i></div><div class="lettuce"></div><div class="cheese"></div><div class="patty"></div><div class="bun-bottom"></div></div><span class="sticker-heart">♥</span></div>
+        </div>
+        <div class="station-heading"><div><span class="eyebrow">YOUR WORKSPACE</span><h2>Pick your station</h2></div><span class="little-note">tap to jump in <span>↘</span></span></div>
+        <div class="station-grid">
+          <button class="station-card menu-card" data-page="menu"><span class="card-topline"><span class="station-emoji">🍔</span><span class="card-arrow">↗</span></span><span class="station-title">Menu List</span><span class="station-description">Your tasty lineup, all in one place.</span><span class="doodle doodle-burger">✦</span><span class="card-bottom"><span>Manage food items</span><b>LET'S GO →</b></span></button>
+          <button class="station-card order-card" data-page="orders"><span class="card-topline"><span class="station-emoji">🧾</span><span class="card-arrow">↗</span></span><span class="station-title">Order Taking</span><span class="station-description">Build an order and serve up smiles.</span><span class="doodle doodle-ticket">♡</span><span class="card-bottom"><span>Tables & order history</span><b>LET'S GO →</b></span></button>
+          <button class="station-card stock-card" data-page="stock"><span class="card-topline"><span class="station-emoji">📦</span><span class="card-arrow">↗</span></span><span class="station-title">Storage Management</span><span class="station-description">Keep your essentials in check.</span><span class="doodle doodle-box">✦</span><span class="card-bottom"><span>Manual stock control</span><b>LET'S GO →</b></span></button>
+          <button class="station-card contact-card" data-page="contacts"><span class="card-topline"><span class="station-emoji">☎️</span><span class="card-arrow">↗</span></span><span class="station-title">Emergency Numbers</span><span class="station-description">Helpful people, one tap away.</span><span class="doodle doodle-phone">♡</span><span class="card-bottom"><span>Contact quick list</span><b>LET'S GO →</b></span></button>
+        </div>
+        <footer class="home-footer"><span>Made with a little extra <b>♡</b></span><span>CRAVE CLUB · GOOD FOOD, HAPPY MOOD</span></footer>
+      </section>
+
+      <section id="menuPage" class="page" aria-labelledby="menuTitle">
+        <div class="page-heading"><div><button class="back-link" data-home>← Home</button><span class="eyebrow">THE TASTY LINEUP</span><h1 id="menuTitle">Menu List <span>🍔</span></h1><p>Add your café favourites. Keep it cute, keep it delicious.</p></div><button class="primary-button" id="addMenuButton"><span>＋</span> Add Item</button></div>
+        <div id="menuList" class="menu-grid"></div>
+      </section>
+
+      <section id="ordersPage" class="page" aria-labelledby="ordersTitle">
+        <div class="page-heading"><div><button class="back-link" data-home>← Home</button><span class="eyebrow">THE SERVING STATION</span><h1 id="ordersTitle">Order Taking <span>🧾</span></h1><p>Choose a table, tap your food, and let the total do its thing.</p></div></div>
+        <div class="order-layout">
+          <div class="order-builder panel">
+            <div class="panel-heading"><div><span class="eyebrow">STEP 01</span><h2>Choose a table</h2></div><button class="text-button" id="addTableButton">＋ Add table</button></div>
+            <div id="tableGrid" class="table-grid"></div>
+            <div class="panel-heading food-pick-heading"><div><span class="eyebrow">STEP 02</span><h2>Pick the cravings</h2></div><span class="tiny-hint">Tap to add</span></div>
+            <div id="orderMenu" class="order-menu-grid"></div>
+          </div>
+          <aside class="order-summary panel">
+            <div class="summary-top"><span class="summary-icon">🧾</span><div><span class="eyebrow">YOUR TICKET</span><h2>Order summary</h2></div></div>
+            <div id="selectedTableLabel" class="selected-table-label">Choose an available table</div>
+            <div id="cartItems" class="cart-items"></div>
+            <div class="summary-total"><span>Total to serve</span><strong id="orderTotal">₹0.00</strong></div>
+            <div class="summary-actions"><button class="primary-button full-button" id="saveOrderButton">Save Order <span>→</span></button><button class="secondary-button full-button" id="cancelDraftButton">Clear order</button></div>
+            <p class="summary-footnote">Stock is managed separately and won't change when an order is placed.</p>
+          </aside>
+        </div>
+        <div class="history-section"><div class="section-title-row"><div><span class="eyebrow">THE PAPER TRAIL</span><h2>Order history</h2></div><span class="tiny-hint">Past tickets stay right here</span></div><div id="orderHistory" class="order-history"></div></div>
+      </section>
+
+      <section id="stockPage" class="page" aria-labelledby="stockTitle">
+        <div class="page-heading"><div><button class="back-link" data-home>← Home</button><span class="eyebrow">THE BACK-OF-HOUSE</span><h1 id="stockTitle">Storage Management <span>📦</span></h1><p>Manual stock tracking, minus the complicated stuff.</p></div><button class="primary-button" id="addStockButton"><span>＋</span> Add Stock</button></div>
+        <div class="stock-toolbar panel"><label class="search-wrap"><span>⌕</span><input id="stockSearch" type="search" placeholder="Find an ingredient or supply…" aria-label="Search stock"></label><label class="filter-wrap"><span>Show</span><select id="stockFilter" aria-label="Filter stock"><option value="all">Everything</option><option value="low">Low stock</option><option value="available">Available</option><option value="unavailable">Unavailable</option></select></label></div>
+        <div id="stockList" class="stock-list"></div>
+      </section>
+
+      <section id="contactsPage" class="page" aria-labelledby="contactsTitle">
+        <div class="page-heading"><div><button class="back-link" data-home>← Home</button><span class="eyebrow">YOUR LITTLE LIFELINE</span><h1 id="contactsTitle">Emergency Numbers <span>☎️</span></h1><p>Keep the right people just a tap away.</p></div><button class="primary-button" id="addContactButton"><span>＋</span> Add Contact</button></div>
+        <div class="safety-note"><span>💡</span><p><strong>Quick tip:</strong> save only contacts you trust. Tap the phone button to call on a supported device.</p></div>
+        <div id="contactList" class="contact-grid"></div>
+      </section>
+    </main>
+    <div id="toastRegion" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+    <footer class="global-footer">CRAVE CLUB <span>✦</span> good food, happy mood</footer>
+  </div>
+
+  <dialog id="recordDialog" class="record-dialog">
+    <form id="recordForm" novalidate>
+      <div class="dialog-heading"><div><span id="dialogEyebrow" class="eyebrow">MAKE IT YOURS</span><h2 id="dialogTitle">Add item</h2></div><button type="button" class="close-button" id="closeDialogButton" aria-label="Close dialog">×</button></div>
+      <div id="dialogFields" class="dialog-fields"></div>
+      <div class="dialog-actions"><button type="button" class="secondary-button" id="dialogCancelButton">Cancel</button><button type="submit" class="primary-button" id="dialogSaveButton">Save it ♡</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="confirmDialog" class="confirm-dialog">
+    <div class="confirm-illustration">🫣</div><h2 id="confirmTitle">Are you sure?</h2><p id="confirmMessage">This action can't be undone.</p><div class="dialog-actions"><button class="secondary-button" id="confirmNo">Keep it</button><button class="danger-button" id="confirmYes">Yes, do it</button></div>
+  </dialog>
+
+  <dialog id="detailsDialog" class="details-dialog">
+    <div class="dialog-heading"><div><span class="eyebrow">THE FULL TICKET</span><h2>Order details</h2></div><button type="button" class="close-button" id="closeDetailsButton" aria-label="Close details">×</button></div>
+    <div id="detailsContent"></div>
+  </dialog>
+</body>
+</html>
