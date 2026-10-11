@@ -504,5 +504,13 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded', setupLogin);
+  document.addEventListener('DOMContentLoaded', () => {
+  const app = document.querySelector('#app');
+  const login = document.querySelector('#loginScreen');
+
+  app?.classList.add('hidden');
+  login?.classList.remove('hidden');
+
+  setupLogin();
+});
 })();
